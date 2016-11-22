@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+    p {
+      line-height: 150%;
+    }
+    p.normal {
+      line-height: 100%;
+    }
+    </style>
+    <title>{{ heading }}</title>
+</head>
+<body>
+    {% for item in output -%}
+        {{ item }}
+    {% endfor -%}
+
+    <a href="{{oncc_url}}"><img src="../oncc_logo.png"></a> 
+</body>
+</html>

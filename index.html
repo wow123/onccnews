@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript">
+        // For todays date;
+        Date.prototype.today = function () {
+          return this.getFullYear() + (((this.getMonth()+1) < 10)?"0":"") + (this.getMonth()+1) + ((this.getDate() < 10)?"0":"") + this.getDate();
+        }
+        location.href = new Date().today() + "/index.html";
+    </script>
+</head>
+</html>
