@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import sys
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
@@ -26,20 +27,20 @@ class Render(QWebPage):
 def WeekdayInChinese(Engday):
     weekday = Engday.upper()
     if weekday == 'MON':
-        Chiday = '?'
+        Chiday = '一'
     elif weekday == 'TUE':
-        Chiday = '?'
+        Chiday = '二'
     elif weekday == 'WED':
-        Chiday = '?'
+        Chiday = '三'
     elif weekday == 'THU':
-        Chiday = '?'
+        Chiday = '四'
     elif weekday == 'FRI':
-        Chiday = '?'
+        Chiday = '五'
     elif weekday == 'SAT':
-        Chiday = '?'
+        Chiday = '六'
     else:
-        Chiday = '?'
-    return '??' + Chiday
+        Chiday = '日'
+    return '星期' + Chiday
 
 # Define project home path
 #project_path = '.'  # for Windows or RPi interactive
