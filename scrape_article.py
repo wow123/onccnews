@@ -27,8 +27,8 @@ if len(sys.argv)<2:
     quit()  # Exit program
 
 # Define project home path
-project_path = '.'  # for Windows or RPi interactive
-#project_path = '/home/pi/projects/onccnews'  # for RPi cron job
+#project_path = '.'  # for Windows or RPi interactive
+project_path = '/home/pi/Projects/onccnews'  # for RPi cron job
 
 domain = 'http://orientaldaily.on.cc'
 oncc_url = str(domain + sys.argv[1])
@@ -96,3 +96,4 @@ filename = os.path.join(folder, articleId)
 with open(filename, "w", encoding="utf-8") as f:
     f.write(output)
     print(filename + ' saved.')
+

@@ -26,24 +26,24 @@ class Render(QWebPage):
 def WeekdayInChinese(Engday):
     weekday = Engday.upper()
     if weekday == 'MON':
-        Chiday = '一'
+        Chiday = '?'
     elif weekday == 'TUE':
-        Chiday = '二'
+        Chiday = '?'
     elif weekday == 'WED':
-        Chiday = '三'
+        Chiday = '?'
     elif weekday == 'THU':
-        Chiday = '四'
+        Chiday = '?'
     elif weekday == 'FRI':
-        Chiday = '五'
+        Chiday = '?'
     elif weekday == 'SAT':
-        Chiday = '六'
+        Chiday = '?'
     else:
-        Chiday = '日'
-    return '星期' + Chiday
+        Chiday = '?'
+    return '??' + Chiday
 
 # Define project home path
-project_path = '.'  # for Windows or RPi interactive
-#project_path = '/home/pi/projects/onccnews'  # for RPi cron job
+#project_path = '.'  # for Windows or RPi interactive
+project_path = '/home/pi/Projects/onccnews'  # for RPi cron job
 
 print('scrape_index starts...')
 domain = 'http://orientaldaily.on.cc'
@@ -75,8 +75,8 @@ for optgroup in drop_down_list.findAll('optgroup'):
         # Call scrape_article.py
         oncc_href = option['value']
 #        cmd = 'python scrape_article.py ' + oncc_href  # for windows
-#        cmd = 'python3 ' + project_path + '/scrape_article.py ' + oncc_href  # for RPi
-#        os.system(cmd)
+        cmd = 'python3 ' + project_path + '/scrape_article.py ' + oncc_href  # for RPi
+        os.system(cmd)
         # Add article to the list variables
         article_type.append('A')  # article
         article_title.append(option.text)
@@ -111,3 +111,4 @@ if os.path.exists(yfolder):
     print('Folder ' + yfolder + ' deleted.')
 else:
    print('Folder ' + yfolder + ' not exists.')
+
