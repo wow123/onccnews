@@ -61,6 +61,12 @@ for paragh in title.find_all_next('p'):
     #print(paragh)
     output_list.append('<p>' + paragh.text + '</p><br>')
 
+# Get Author for commentary article (if any)
+author = soup.find('div', class_='authorInfo')
+if author is not None:
+    #print('author=' + author.text)
+    output_list.append('<p>' + author.text + '</p><br>')
+
 # Get photo
 aTags = title.find_all_next('a')
 for aTag in aTags:
