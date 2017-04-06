@@ -7,6 +7,7 @@ from lxml import html
 from bs4 import BeautifulSoup
 from jinja2 import Environment, FileSystemLoader
 import time, os
+from datetime import datetime
 
 #Take this class for granted.Just use result of rendering.
 class Render(QWebPage):
@@ -21,6 +22,11 @@ class Render(QWebPage):
     self.frame = self.mainFrame()
     self.app.quit()
 
+# Function to print message with system time
+def Log(mesg):
+    print(datetime.now().strftime('%H:%M:%S') + ' ' + mesg)
+    return
+
 # Main program begins
 if len(sys.argv)<2:
     print('Pls. pass the article url as parameter.')
@@ -33,7 +39,7 @@ project_path = '/home/pi/Projects/onccnews'  # for RPi cron job
 
 domain = 'http://orientaldaily.on.cc'
 oncc_url = str(domain + sys.argv[1])
-print('Scraping ' + oncc_url)
+Log('Scraping ' + oncc_url)
 #oncc_url = 'http://orientaldaily.on.cc/cnt/news/20160920/00186_001.html'
 i = articleId = oncc_url.rfind('/')  # Search last '/' char to get the aricle Id
 articleId = oncc_url[i+1:]
@@ -42,6 +48,8 @@ articleId = oncc_url[i+1:]
 output_list=[]
 # Scape web page by lxml
 r = Render(oncc_url)
+Log('Sleep 30 secs...')
+time.sleep(30)
 # Parsing data by Beautiful Soup
 soup = BeautifulSoup(r.frame.toHtml(), 'html.parser')
 #print (soup.encode('utf-8'))
@@ -80,7 +88,7 @@ for aTag in aTags:
 folder = project_path + '/' + time.strftime('%Y%m%d')
 if not os.path.exists(folder):
     os.makedirs(folder)
-    print('Folder ' + folder + ' created.')
+    Log('Folder ' + folder + ' created.')
 
 '''
 # Save source code of the entire page for debugging
@@ -102,5 +110,7 @@ output = template.render(heading=heading, output=output_list, oncc_url=oncc_url)
 filename = os.path.join(folder, articleId)
 with open(filename, "w", encoding="utf-8") as f:
     f.write(output)
-    print(filename + ' saved.')
-
+    Log(filename + ' saved.')
+Log('Sleep 30 secs...')
+time.sleep(30)
+Log('End of scrape_article.')

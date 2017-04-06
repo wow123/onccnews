@@ -42,11 +42,16 @@ def WeekdayInChinese(Engday):
         Chiday = '日'
     return '星期' + Chiday
 
+# Function to print message with system time
+def Log(mesg):
+    print(datetime.now().strftime('%H:%M:%S') + ' ' + mesg)
+    return
+
 # Define project home path
 #project_path = '.'  # for Windows or RPi interactive
 project_path = '/home/pi/Projects/onccnews'  # for RPi cron job
 
-print('scrape_index starts...')
+Log('scrape_index starts...')
 domain = 'http://orientaldaily.on.cc'
 # Scape web page by lxml
 r = Render(domain)
@@ -65,6 +70,7 @@ drop_down_list = soup.find('select', id='articleListSELECT')
 article_type=[]
 article_title=[]
 article_href=[]
+article_oncc_href=[]
 for optgroup in drop_down_list.findAll('optgroup'):
 #    print('inside optgroup')
 #    print(optgroup)
@@ -72,12 +78,11 @@ for optgroup in drop_down_list.findAll('optgroup'):
     article_type.append('G')  # group label
     article_title.append(optgroup['label'])
     article_href.append('')
+    article_oncc_href.append('')
     for option in optgroup.findAll('option'):
-        # Call scrape_article.py
+        # Add oncc link for each article for later use of scrape_article
         oncc_href = option['value']
-#        cmd = 'python scrape_article.py ' + oncc_href  # for windows
-        cmd = 'python3 ' + project_path + '/scrape_article.py ' + oncc_href  # for RPi
-        os.system(cmd)
+        article_oncc_href.append(oncc_href)
         # Add article to the list variables
         article_type.append('A')  # article
         article_title.append(option.text)
@@ -88,7 +93,7 @@ for optgroup in drop_down_list.findAll('optgroup'):
 folder = project_path + '/' + time.strftime('%Y%m%d')
 if not os.path.exists(folder):
     os.makedirs(folder)
-    print('Folder ' + folder + ' created.')
+    Log('Folder ' + folder + ' created.')
 
 # Using jinja to create html page from extracted data
 templateLoader = FileSystemLoader( searchpath=project_path)
@@ -102,14 +107,23 @@ output = template.render(newsdate=newsdate, types=article_type, titles=article_t
 filename = os.path.join(folder, 'index.html')
 with open(filename, 'w', encoding='utf-8') as f:
     f.write(output)
-    print(filename + ' saved.')
+    Log(filename + ' saved.')
 
 # Delete yesterday folder <yymmdd - 1>
 yday = datetime.today() - timedelta(days=1)
 yfolder = project_path + '/' + yday.strftime('%Y%m%d')
 if os.path.exists(yfolder):
     shutil.rmtree(yfolder, ignore_errors=True)
-    print('Folder ' + yfolder + ' deleted.')
+    Log('Folder ' + yfolder + ' deleted.')
 else:
-   print('Folder ' + yfolder + ' not exists.')
+    Log('Folder ' + yfolder + ' not exists.')
 
+# Amend on 6.4.2017
+# Loop to scrape each article
+for t, h in zip(article_type, article_oncc_href):
+    if t == 'A':
+        print(h)
+        # Call scrape_article.py
+#        cmd = 'python scrape_article.py ' + oncc_href  # for windows
+#        cmd = 'python3 ' + project_path + '/scrape_article.py ' + oncc_href  # for RPi
+#        os.system(cmd)
