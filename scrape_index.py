@@ -48,8 +48,8 @@ def Log(mesg):
     return
 
 # Define project home path
-project_path = '.'  # for Windows or RPi interactive
-#project_path = '/home/pi/projects/onccnews'  # for RPi cron job
+#project_path = '.'  # for Windows or RPi interactive
+project_path = '/home/pi/Projects/onccnews'  # for RPi cron job
 
 Log('scrape_index starts...')
 domain = 'http://orientaldaily.on.cc'
