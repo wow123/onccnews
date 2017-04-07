@@ -124,6 +124,6 @@ for t, h in zip(article_type, article_oncc_href):
     if t == 'A':
         print(h)
         # Call scrape_article.py
-#        cmd = 'python scrape_article.py ' + oncc_href  # for windows
-#        cmd = 'python3 ' + project_path + '/scrape_article.py ' + oncc_href  # for RPi
+#        cmd = 'python scrape_article.py ' + h  # for windows
+#        cmd = 'python3 ' + project_path + '/scrape_article.py ' + h  # for RPi
 #        os.system(cmd)
