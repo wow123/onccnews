@@ -108,6 +108,7 @@ filename = os.path.join(folder, 'index.html')
 with open(filename, 'w', encoding='utf-8') as f:
     f.write(output)
     Log(filename + ' saved.')
+f.close()
 
 # Delete yesterday folder <yymmdd - 1>
 yday = datetime.today() - timedelta(days=1)

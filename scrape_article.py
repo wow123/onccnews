@@ -48,8 +48,8 @@ articleId = oncc_url[i+1:]
 output_list=[]
 # Scape web page by lxml
 r = Render(oncc_url)
-Log('Sleep 30 secs...')
-time.sleep(30)
+Log('Sleep 10 secs...')
+time.sleep(10)
 # Parsing data by Beautiful Soup
 soup = BeautifulSoup(r.frame.toHtml(), 'html.parser')
 #print (soup.encode('utf-8'))
@@ -111,6 +111,7 @@ filename = os.path.join(folder, articleId)
 with open(filename, "w", encoding="utf-8") as f:
     f.write(output)
     Log(filename + ' saved.')
-Log('Sleep 30 secs...')
-time.sleep(30)
+f.close()
+Log('Sleep 2 secs...')
+time.sleep(2)
 Log('End of scrape_article.')
