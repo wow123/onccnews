@@ -47,16 +47,24 @@ def Log(mesg):
     print(datetime.now().strftime('%H:%M:%S') + ' ' + mesg)
     return
 
+Log('scrape_index starts...')
+
 # Define project home path
 #project_path = '.'  # for Windows or RPi interactive
-project_path = '/home/pi/Projects/onccnews'  # for RPi cron job
-
-Log('scrape_index starts...')
+project_path = '/home/pi/Projects/onccnews/'  # for RPi cron job
+html_file = 'oncc_html.txt'
 domain = 'http://orientaldaily.on.cc'
-# Scape web page by lxml
-r = Render(domain)
+
+#Commented on 11.17.2017
+#Fail to use lxml in crontab mode to render webpage.
+#lxml works fine in interactive mode.
+#Instead, use PhantomJS in crontab mode.
+# Render web page by lxml
+#r = Render(domain)
+
 # Parsing data by Beautiful Soup
-soup = BeautifulSoup(r.frame.toHtml(), 'html.parser')
+#soup = BeautifulSoup(r.frame.toHtml(), 'html.parser') #for lxml method
+soup = BeautifulSoup(open(project_path+'/'+html_file, encoding='utf-8'), 'html.parser') #for PhantomJS
 #print (soup.encode('utf-8'))
 
 # Get cover image
@@ -123,8 +131,10 @@ else:
 # Loop to scrape each article
 for t, h in zip(article_type, article_oncc_href):
     if t == 'A':
-        print(h)
+#        print(h)
         # Call scrape_article.py
 #        cmd = 'python scrape_article.py ' + h  # for windows
-#        cmd = 'python3 ' + project_path + '/scrape_article.py ' + h  # for RPi
+        cmd = 'python3 ' + project_path + '/scrape_article.py ' + h  # for RPi
 #        os.system(cmd)
+
+Log('End of scrape_index.')

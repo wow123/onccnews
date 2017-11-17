@@ -27,6 +27,8 @@ def Log(mesg):
     print(datetime.now().strftime('%H:%M:%S') + ' ' + mesg)
     return
 
+Log('scrape_article starts...')
+
 # Main program begins
 if len(sys.argv)<2:
     print('Pls. pass the article url as parameter.')
