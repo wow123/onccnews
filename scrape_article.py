@@ -48,12 +48,19 @@ articleId = oncc_url[i+1:]
 
 # declare variable for jinja
 output_list=[]
+
+#Commented on 29.11.2017
+#Fail to use lxml in crontab mode to render webpage.
+#lxml works fine in interactive mode.
+#Instead, use PhantomJS in crontab mode.
 # Scape web page by lxml
-r = Render(oncc_url)
+#r = Render(oncc_url)
+cmd = 'phantomjs ' + project_path + '/onccSaveArticle.js ' + oncc_url + ' > ' + articleId + '.txt'
 Log('Sleep 10 secs...')
 time.sleep(10)
 # Parsing data by Beautiful Soup
-soup = BeautifulSoup(r.frame.toHtml(), 'html.parser')
+#soup = BeautifulSoup(r.frame.toHtml(), 'html.parser') #for lxml method
+soup = BeautifulSoup(open(project_path+'/'+articleId+'.txt', encoding='utf-8'), 'html.parser') #for PhantomJS
 #print (soup.encode('utf-8'))
 title = soup.find('h1')  # Get aritcle title
 #print(title)

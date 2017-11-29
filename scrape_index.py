@@ -55,7 +55,7 @@ project_path = '/home/pi/Projects/onccnews/'  # for RPi cron job
 html_file = 'oncc_html.txt'
 domain = 'http://orientaldaily.on.cc'
 
-#Commented on 11.17.2017
+#Commented on 17.11.2017
 #Fail to use lxml in crontab mode to render webpage.
 #lxml works fine in interactive mode.
 #Instead, use PhantomJS in crontab mode.
@@ -70,6 +70,7 @@ soup = BeautifulSoup(open(project_path+'/'+html_file, encoding='utf-8'), 'html.p
 # Get cover image
 #head_img = soup.find('img', class_='headline')
 #head_img_url = domain + head_img['src']
+head_img_url = 'http://orientaldaily.on.cc/img/v2/logo_odn.png'
 
 # Get all items from the Drop Down List
 article_list = soup.find('div', {'id': 'articleList'})
