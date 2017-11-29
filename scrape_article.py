@@ -56,6 +56,7 @@ output_list=[]
 # Scape web page by lxml
 #r = Render(oncc_url)
 cmd = 'phantomjs ' + project_path + '/onccSaveArticle.js ' + oncc_url + ' > ' + articleId + '.txt'
+os.system(cmd)
 Log('Sleep 10 secs...')
 time.sleep(10)
 # Parsing data by Beautiful Soup

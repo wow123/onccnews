@@ -52,7 +52,7 @@ Log('scrape_index starts...')
 # Define project home path
 #project_path = '.'  # for Windows or RPi interactive
 project_path = '/home/pi/Projects/onccnews/'  # for RPi cron job
-html_file = 'oncc_html.txt'
+html_file = 'oncc_index.txt'
 domain = 'http://orientaldaily.on.cc'
 
 #Commented on 17.11.2017
