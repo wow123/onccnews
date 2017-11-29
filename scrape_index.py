@@ -68,34 +68,34 @@ soup = BeautifulSoup(open(project_path+'/'+html_file, encoding='utf-8'), 'html.p
 #print (soup.encode('utf-8'))
 
 # Get cover image
-head_img = soup.find('img', class_='headline')
-head_img_url = domain + head_img['src']
+#head_img = soup.find('img', class_='headline')
+#head_img_url = domain + head_img['src']
 
 # Get all items from the Drop Down List
-drop_down_list = soup.find('select', id='articleListSELECT')
-# Tag structure of drop_down_list:
+article_list = soup.find('div', {'id': 'articleList'})
+# Tag structure of article_list:
 # <select id="articleListSELECT" ...> <optgroup label=...> <option value=...> </option> </optgroup> </select>
 article_type=[]
 article_title=[]
 article_href=[]
 article_oncc_href=[]
-for optgroup in drop_down_list.findAll('optgroup'):
+for optgroup in article_list.find_all('ul', {'class': 'commonBigList'}):
 #    print('inside optgroup')
 #    print(optgroup)
     # Add group label to the lists
     article_type.append('G')  # group label
-    article_title.append(optgroup['label'])
+    article_title.append(optgroup['title'])
     article_href.append('')
     article_oncc_href.append('')
-    for option in optgroup.findAll('option'):
+    for option in optgroup.find_all('a', href=True):
         # Add oncc link for each article for later use of scrape_article
-        oncc_href = option['value']
+        oncc_href = option['href']
         article_oncc_href.append(oncc_href)
         # Add article to the list variables
         article_type.append('A')  # article
         article_title.append(option.text)
-        i = option['value'].rfind('/')  # Search last '/' char to get the article Id
-        article_href.append(option['value'][i+1:])
+        i = oncc_href.rfind('/')  # Search last '/' char to get the article Id
+        article_href.append(oncc_href[i+1:])
 
 # Create output folder <yymmdd>
 folder = project_path + '/' + time.strftime('%Y%m%d')
