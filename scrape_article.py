@@ -63,7 +63,7 @@ Log('Sleep 10 secs...')
 time.sleep(10)
 # Parsing data by Beautiful Soup
 #soup = BeautifulSoup(r.frame.toHtml(), 'html.parser') #for lxml method
-soup = BeautifulSoup(open(articleFileTmpFile, encoding='utf-8'), 'html.parser') #for PhantomJS
+soup = BeautifulSoup(open(articleTmpFile, encoding='utf-8'), 'html.parser') #for PhantomJS
 #print (soup.encode('utf-8'))
 title = soup.find('h1')  # Get aritcle title
 #print(title)
