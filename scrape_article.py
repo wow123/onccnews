@@ -57,7 +57,7 @@ output_list=[]
 #Instead, use PhantomJS in crontab mode.
 # Scape web page by lxml
 #r = Render(oncc_url)
-cmd = 'phantomjs '+project_path+'/onccSaveArticle.js '+oncc_url+' > '+articleTmpFile
+cmd = 'phantomjs '+project_path+'/saveWebPage.js '+oncc_url+' > '+articleTmpFile
 os.system(cmd)
 Log('Sleep 10 secs...')
 time.sleep(10)

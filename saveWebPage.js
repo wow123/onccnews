@@ -2,7 +2,7 @@ var  page = require('webpage').create(),
   system = require('system'),
   url;
 if (system.args.length === 1) {
-  console.log('Usage: onccSaveArticle.js <article URL>');
+  console.log('Usage: SaveWebPage.js <some URL>');
   phantom.exit();
 }
 

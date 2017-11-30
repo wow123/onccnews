@@ -51,7 +51,7 @@ Log('scrape_index starts...')
 
 # Define project home path
 #project_path = '.'  # for Windows or RPi interactive
-project_path = '/home/pi/Projects/onccnews/'  # for RPi cron job
+project_path = '/home/pi/Projects/onccnews'  # for RPi cron job
 tmp_path = project_path+'/tmp'  # for RPi cron job
 
 domain = 'http://orientaldaily.on.cc'
@@ -65,7 +65,7 @@ indexTmpFile = tmp_path+'/oncc_index.txt'
 #Instead, use PhantomJS in crontab mode.
 # Render web page by lxml
 #r = Render(domain)
-cmd = 'phantomjs '+project_path+'/onccSaveIndex.js '+oncc_index_url+' > '+indexTmpFile
+cmd = 'phantomjs '+project_path+'/saveWebPage.js '+oncc_index_url+' > '+indexTmpFile
 os.system(cmd)
 Log('Sleep 10 secs...')
 time.sleep(10)
