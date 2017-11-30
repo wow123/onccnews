@@ -52,8 +52,12 @@ Log('scrape_index starts...')
 # Define project home path
 #project_path = '.'  # for Windows or RPi interactive
 project_path = '/home/pi/Projects/onccnews/'  # for RPi cron job
-html_file = 'oncc_index.txt'
+tmp_path = project_path+'/tmp'  # for RPi cron job
+
 domain = 'http://orientaldaily.on.cc'
+oncc_index_url = domain+'/cnt/news/'+time.strftime('%Y%m%d')+'/index.html'
+# e.g. http://orientaldaily.on.cc/cnt/news/20171130/index.html
+indexTmpFile = tmp_path+'/oncc_index.txt'
 
 #Commented on 17.11.2017
 #Fail to use lxml in crontab mode to render webpage.
@@ -61,16 +65,19 @@ domain = 'http://orientaldaily.on.cc'
 #Instead, use PhantomJS in crontab mode.
 # Render web page by lxml
 #r = Render(domain)
+cmd = 'phantomjs '+project_path+'/onccSaveIndex.js '+oncc_index_url+' > '+indexTmpFile
+os.system(cmd)
+Log('Sleep 10 secs...')
+time.sleep(10)
 
 # Parsing data by Beautiful Soup
 #soup = BeautifulSoup(r.frame.toHtml(), 'html.parser') #for lxml method
-soup = BeautifulSoup(open(project_path+'/'+html_file, encoding='utf-8'), 'html.parser') #for PhantomJS
+soup = BeautifulSoup(open(indexTmpFile, encoding='utf-8'), 'html.parser') #for PhantomJS
 #print (soup.encode('utf-8'))
 
 # Get cover image
 #head_img = soup.find('img', class_='headline')
 #head_img_url = domain + head_img['src']
-head_img_url = 'http://orientaldaily.on.cc/img/v2/logo_odn.png'
 
 # Get all items from the Drop Down List
 article_list = soup.find('div', {'id': 'articleList'})
@@ -111,7 +118,8 @@ env.globals.update(zip=zip)  #to use zip which can iterate 2 lists
 TEMPLATE_FILE = 'tmpl_index.html'
 template = env.get_template( TEMPLATE_FILE )
 newsdate = time.strftime('%d-%m-%Y') + ' ~ ' + WeekdayInChinese(time.strftime('%a'))
-output = template.render(newsdate=newsdate, types=article_type, titles=article_title, hrefs=article_href, head_img_url=head_img_url)
+#output = template.render(newsdate=newsdate, types=article_type, titles=article_title, hrefs=article_href, head_img_url=head_img_url)
+output = template.render(newsdate=newsdate, types=article_type, titles=article_title, hrefs=article_href)
 #print(output)
 filename = os.path.join(folder, 'index.html')
 with open(filename, 'w', encoding='utf-8') as f:

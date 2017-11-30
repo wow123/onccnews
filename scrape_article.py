@@ -38,6 +38,7 @@ if len(sys.argv)<2:
 # Define project home path
 #project_path = '.'  # for Windows or RPi interactive
 project_path = '/home/pi/Projects/onccnews'  # for RPi cron job
+tmp_path = project_path+'/tmp'  # for RPi cron job
 
 domain = 'http://orientaldaily.on.cc'
 oncc_url = str(domain + sys.argv[1])
@@ -45,6 +46,7 @@ Log('Scraping ' + oncc_url)
 #oncc_url = 'http://orientaldaily.on.cc/cnt/news/20160920/00186_001.html'
 i = articleId = oncc_url.rfind('/')  # Search last '/' char to get the aricle Id
 articleId = oncc_url[i+1:]
+articleTmpFile = tmp_path+'/'+articleId+'.txt'
 
 # declare variable for jinja
 output_list=[]
@@ -55,13 +57,13 @@ output_list=[]
 #Instead, use PhantomJS in crontab mode.
 # Scape web page by lxml
 #r = Render(oncc_url)
-cmd = 'phantomjs ' + project_path + '/onccSaveArticle.js ' + oncc_url + ' > ' + articleId + '.txt'
+cmd = 'phantomjs '+project_path+'/onccSaveArticle.js '+oncc_url+' > '+articleTmpFile
 os.system(cmd)
 Log('Sleep 10 secs...')
 time.sleep(10)
 # Parsing data by Beautiful Soup
 #soup = BeautifulSoup(r.frame.toHtml(), 'html.parser') #for lxml method
-soup = BeautifulSoup(open(project_path+'/'+articleId+'.txt', encoding='utf-8'), 'html.parser') #for PhantomJS
+soup = BeautifulSoup(open(articleFileTmpFile, encoding='utf-8'), 'html.parser') #for PhantomJS
 #print (soup.encode('utf-8'))
 title = soup.find('h1')  # Get aritcle title
 #print(title)
