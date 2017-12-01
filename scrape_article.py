@@ -44,7 +44,7 @@ domain = 'http://orientaldaily.on.cc'
 oncc_url = str(domain + sys.argv[1])
 Log('Scraping ' + oncc_url)
 #oncc_url = 'http://orientaldaily.on.cc/cnt/news/20160920/00186_001.html'
-i = oncc_url.rfind('/')  # Search last '/' char to get the aricle Id
+i = oncc_url.rfind('/')  # Search last '/' char to get the article Id
 articleId = oncc_url[i+1:]
 articleTmpFile = tmp_path+'/'+articleId+'.txt'
 
