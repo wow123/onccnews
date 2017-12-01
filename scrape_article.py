@@ -124,6 +124,6 @@ with open(filename, "w", encoding="utf-8") as f:
     f.write(output)
     Log(filename + ' saved.')
 f.close()
-Log('Sleep 2 secs...')
-time.sleep(2)
+#Log('Sleep 2 secs...')
+#time.sleep(2)
 Log('End of scrape_article.')
