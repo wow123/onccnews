@@ -65,7 +65,7 @@ time.sleep(10)
 #soup = BeautifulSoup(r.frame.toHtml(), 'html.parser') #for lxml method
 soup = BeautifulSoup(open(articleTmpFile, encoding='utf-8'), 'html.parser') #for PhantomJS
 #print (soup.encode('utf-8'))
-title = soup.find('h1')  # Get aritcle title
+title = soup.find('h1')  # Get article title
 #print(title)
 heading = title.text
 output_list.append('<i><h1>' + heading + '</h1></i>')
